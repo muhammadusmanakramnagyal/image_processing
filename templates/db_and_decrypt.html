@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Encryption Test</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <style>
+        .col-12 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Adjust the gap value as needed */
+        }
+,
+,
+        .col-12 button {
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <header id="header">
+        <h1 id="logo"><a href="{% url 'decrypt_image' %}">Landed</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'decrypt_image' %}">Home</a></li>
+                <li><a href="#">Layouts</a>
+                    <ul>
+                        <li><a href="{% url 'decrypt_image' %}">Left Sidebar</a></li>
+                        <li><a href="{% url 'decrypt_image' %}">Right Sidebar</a></li>
+                        <li><a href="{% url 'decrypt_image' %}">No Sidebar</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'decrypt_image' %}">Elements</a></li>
+                <li><a href="#" class="button primary">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+ 
+    <main id="main" class="wrapper style1">
+        <div class="container">
+            <header class="major">
+                <h2>Quantum Computing and Medical Imaging</h2>
+                <p>Exploring the intersection of quantum computing, cryptography, and advanced medical imaging techniques.</p>
+            </header>
+            <div class="row gtr-150">
+                <div class="col-8 col-12-medium">
+
+                    <!-- Content -->
+                    <section id="content">
+                        <h3>Advancements in Quantum Computing</h3>
+                        <p>Quantum computing represents a revolutionary leap in computational power. By leveraging quantum bits (qubits), quantum computers can solve complex problems in cryptography, medical imaging, and beyond at unprecedented speeds.</p>
+                        <p>Our research focuses on integrating quantum computing with secure encryption techniques to enhance data privacy and accelerate processing in medical imaging applications.</p>
+                        <h3>Medical Imaging Enhanced by Quantum Technologies</h3>
+                        <p>Medical imaging is undergoing a transformation with the integration of quantum technologies. Enhanced image resolution and processing capabilities allow for more accurate diagnostics and treatment planning.</p>
+                        <p>By using quantum algorithms for image reconstruction and analysis, we aim to significantly improve the quality and speed of medical imaging processes.</p>
+                    </section>
+
+                </div>
+                <div class="col-4 col-12-medium">
+
+                    <!-- Sidebar -->
+                    <section id="sidebar">
+                        <section>
+                            <h3>Quantum Encryption</h3>
+                            <p>Our quantum encryption techniques provide unparalleled security for sensitive data. By utilizing quantum key distribution (QKD), we ensure that encrypted data remains secure against future quantum attacks.</p>
+                            <footer>
+                                <ul class="actions">
+                                    <li><a href="#" class="button">Learn More</a></li>
+                                </ul>
+                            </footer>
+                        </section>
+                        <hr />
+                        <section>
+                            <h3>Improving Medical Diagnostics</h3>
+                            <p>Our approach combines quantum technologies with medical imaging to offer cutting-edge diagnostic tools. Discover how quantum computing can enhance imaging techniques and contribute to better health outcomes.</p>
+                            <footer>
+                                <ul class="actions">
+                                    <li><a href="#" class="button">Learn More</a></li>
+                                </ul>
+                            </footer>
+                        </section>
+                    </section>
+
+                </div>
+            </div>
+            <section id="encrypted-images">
+                <h1>Encrypted Images</h1>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Doctor Name</th>
+                                <th>Encrypted Image Path</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for image in encrypted_images %}
+                                <tr>
+                                    <td>{{ image.id }}</td>
+                                    <td>{{ image.doctor_name }}</td>
+                                    <td>{{ image.encrypted_image_path }}</td>
+                                    <td>{{ image.created_at }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <header class="major">
+                </header>
+                <form id="decrypt-form" method="POST" action="{% url 'decrypt_image' %}">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <label for="image_id">Decrypt Image by ID</label>
+                        <input type="text" name="image_id" id="image_id" value="" placeholder="Enter the ID" required>
+                                <button type="submit" class="button small fit">Decrypt Image</button>
+                    </div>
+                </form>
+                
+        
+                <div id="decrypted-image"></div>
+        
+                <script>
+  document.getElementById('decrypt-form').onsubmit = function(e) {
+    e.preventDefault(); // Prevent the default form submission
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Handle the decrypted image path as a string
+            let imageUrl = data.decrypted_image_path;
+            console.log('Original URL:', imageUrl);
+
+            if (typeof imageUrl === 'string') {
+                // Remove 'encrypted-images/' from the path if it exists
+                if (imageUrl.startsWith('encrypted-images/')) {
+                    imageUrl = imageUrl.replace('encrypted-images/', '');
+                }
+
+                console.log('Processed Image URL:', imageUrl);
+
+                // Construct the full URL with '/media/' prefix
+                const fullImageUrl = 'http://127.0.0.1:8000/media/' + imageUrl;
+                console.log('Full Image URL:', fullImageUrl);
+
+                // Create the image element
+                const imgElement = document.createElement('img');
+                imgElement.src = fullImageUrl; // Set the full URL
+                console.log('Image Source Set To:', imgElement.src); // Log the final URL
+
+                // Display the decrypted image
+                const imageContainer = document.getElementById('decrypted-image');
+                if (imageContainer) {
+                    imageContainer.innerHTML = ''; // Clear previous images
+                    imageContainer.appendChild(imgElement);
+                } else {
+                    console.error('Element with ID "decrypted-image" not found');
+                }
+            } else {
+                console.error('URL is not a string or is undefined');
+            }
+        } else {
+            alert(data.error || 'An unknown error occurred');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
+
+
+                </script>
+            </section>
+        </div>
+    </main>
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+            <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; Untitled. All rights reserved.</li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </footer>
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+    <script src="{% static 'assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/util.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

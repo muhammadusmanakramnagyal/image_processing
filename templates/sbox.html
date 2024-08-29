@@ -1,0 +1,163 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>No Sidebar - Landed by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	<style>
+		/* Loader styles */
+		#loader {
+			display: none;
+			position: absolute; /* Change to absolute */
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 1000; /* Adjust z-index as needed */
+		}
+		
+		.spinner {
+			border: 4px solid rgba(255, 255, 255, 0.15);
+			border-top: 4px solid #fff;
+			border-radius: 50%;
+			width: 2em;
+			height: 2em;
+			animation: spin 1s linear infinite;
+		}
+	
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+	</style>
+<body class="is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="{% url 'show_sbox_page' %}">Landed</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'show_sbox_page' %}">Home</a></li>
+                    <li>
+                        <a href="#">Layouts</a>
+                        <ul>
+                            <li><a href="{% url 'show_sbox_page' %}">Say Hi</a></li>
+                            <li><a href="{% url 'show_sbox_page' %}">QRNG Page</a></li>
+                            <li><a href="{% url 'show_sbox_page' %}">Generate Quantum Key</a></li>
+                            <li>
+                                <a href="#">Submenu</a>
+                                <ul>
+                                    <li><a href="#">Option 1</a></li>
+                                    <li><a href="#">Option 2</a></li>
+                                    <li><a href="#">Option 3</a></li>
+                                    <li><a href="#">Option 4</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'show_sbox_page' %}">Elements</a></li>
+                    <li><a href="#" class="button primary">Sign Up</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h2>Non-Linearity Measurement</h2>
+                </header>
+                <button id="measure-non-linearity" class="button small fit" onclick="measureNonLinearity()">Measure Non-Linearity</button>
+                <div id="loader">
+                    <div class="spinner"></div>
+                </div>
+                <div id="output">
+                    <h3>Non-Linearity Value:</h3>
+                    <p id="non-linearity-value"></p>
+                </div>
+            </div>
+            <div class="container">
+                <header class="major">
+                    <p> </p>
+                </header>
+                <!-- Content -->
+                <section id="content">
+                    <h3>Understanding S-Boxes</h3>
+                    <p>S-Boxes (Substitution Boxes) are critical components in symmetric key algorithms, used to obscure input data. They transform input bits into output bits through non-linear substitution, providing enhanced security in encryption processes.</p>
+
+                    <h3>Benefits of S-Boxes</h3>
+                    <ul>
+                        <li><strong>Enhanced Security:</strong> By introducing non-linearity, S-Boxes significantly increase the complexity of cryptographic attacks.</li>
+                        <li><strong>Resistance to Linear Attacks:</strong> Properly designed S-Boxes are resistant to linear cryptanalysis, safeguarding encrypted data.</li>
+                        <li><strong>Efficiency:</strong> S-Boxes allow for efficient computations in hardware and software implementations.</li>
+                    </ul>
+
+                    <h3>Applications of S-Boxes</h3>
+                    <p>S-Boxes are utilized in various encryption algorithms, including:</p>
+                    <ul>
+                        <li><strong>AES:</strong> Advanced Encryption Standard, which employs S-Boxes for data substitution.</li>
+                        <li><strong>DES:</strong> Data Encryption Standard, which incorporates S-Boxes in its function design.</li>
+                        <li><strong>RSA:</strong> While primarily based on number theory, S-Boxes may complement hybrid systems.</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <ul class="icons">
+                    <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                    <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+                </ul>
+                <ul class="copyright">
+                    <p>© Secure and Efficient ROI Encryption and Data Reduction in Medical Images Using Quantum Phenomena. All rights reserved.</p>
+                </ul>
+            </footer>
+
+        </div>
+
+        <!-- Scripts -->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+        <script src="{% static 'assets/js/browser.min.js' %}"></script>
+        <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+        <script src="{% static 'assets/js/util.js' %}"></script>
+        <script>
+            function measureNonLinearity() {
+                console.log('Button clicked'); // Check if this logs
+                document.getElementById('loader').style.display = 'block'; // Show loader
+				document.getElementById('non-linearity-value').innerText = '';
+
+
+                fetch('/generate_quantum_sbox/', {
+                    headers: {
+                        'x-requested-with': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    console.log('Response received'); // Check if response is received
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('non-linearity-value').innerText = data.nonlinearity;
+                    document.getElementById('loader').style.display = 'none'; // Hide loader
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loader').style.display = 'none'; // Hide loader on error
+                });
+            }
+        </script>
+    </body>
+</html>

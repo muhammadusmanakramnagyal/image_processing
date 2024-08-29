@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>No Sidebar - Landed by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="{% url 'show_qrng_page' %}">Landed</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="{% url 'show_qrng_page' %}">Home</a></li>
+							<li>
+								<a href="#">Layouts</a>
+								<ul>
+									
+									<li><a href="{% url 'show_qrng_page' %}">Say Hi</a></li>
+									<li><a href="{% url 'show_qrng_page' %}">QRNG Page</a></li>
+									<li><a href="{% url 'show_qrng_page' %}">Generate Quantum Key</a></li>
+								
+									<li>
+										<a href="#">Submenu</a>
+										<ul>
+											<li><a href="#">Option 1</a></li>
+											<li><a href="#">Option 2</a></li>
+											<li><a href="#">Option 3</a></li>
+											<li><a href="#">Option 4</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li><a href="{% url 'show_qrng_page' %}">Elements</a></li>
+							
+							<li><a href="#" class="button primary">Sign Up</a></li>
+						</ul>
+					</nav>
+				</header>
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>Generate Quantum Key</h2>
+						</header>
+						<button id="generate-key" class="button small fit" onclick="generateQuantumKey()">Generate Quantum Key</button>
+						<div id="output">
+							<h3>Generated Key:</h3>
+							<p id="quantum-key"></p>
+							<h3>Entropy:</h3>
+							<p id="entropy-value"></p>
+						</div>
+					</div>
+			<div class="container">
+				<header class="major">
+					<p> </p>
+				</header>
+
+				<!-- Content -->
+				<section id="content">
+					<h3>Understanding QRNG</h3>
+					<p>Quantum Random Number Generation (QRNG) utilizes the principles of quantum mechanics to produce random numbers that are fundamentally unpredictable. This technology has far-reaching applications in areas such as cryptography, secure communications, and randomness generation for simulations.</p>
+
+					<h3>Benefits of QRNG</h3>
+					<ul>
+						<li><strong>High Security:</strong> QRNG's reliance on quantum mechanics ensures a level of security that is unmatched by traditional methods, making it ideal for encrypting sensitive information.</li>
+						<li><strong>Unpredictability:</strong> The inherent unpredictability of quantum processes provides a robust foundation for secure communication protocols, reducing the risk of breaches.</li>
+						<li><strong>Scalability:</strong> QRNG systems can efficiently generate large volumes of random numbers, catering to industries that require rapid and secure randomness, such as finance and gaming.</li>
+						<li><strong>True Randomness:</strong> Unlike algorithms that produce pseudo-random numbers, QRNG provides genuine randomness, which is crucial for scientific research, simulations, and gaming applications.</li>
+					</ul>
+
+					<h3>Applications of QRNG</h3>
+					<p>QRNG is making significant strides in various fields, including:</p>
+					<ul>
+						<li><strong>Cryptography:</strong> Enhancing security protocols and encryption methods.</li>
+						<li><strong>Telecommunications:</strong> Improving the security of data transmission.</li>
+						<li><strong>Financial Services:</strong> Securing transactions and preventing fraud.</li>
+						<li><strong>Gaming:</strong> Ensuring fair play through unpredictable outcomes.</li>
+					</ul>
+				</section>
+
+			</div>
+
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<p>© Secure and Efficient ROI Encryption and Data Reduction in Medical Images Using Quantum Phenomena. All rights reserved.</p>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script>
+				function generateQuantumKey() {
+					fetch('/generate-quantum-key/', {
+						headers: {
+							'x-requested-with': 'XMLHttpRequest'
+						}
+					})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						document.getElementById('quantum-key').innerText = data.key;
+						document.getElementById('entropy-value').innerText = data.entropy;
+					})
+					.catch(error => console.error('Error:', error));
+				}
+			</script>
+			
+	</body>
+</html>
