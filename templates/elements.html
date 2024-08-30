@@ -20,7 +20,7 @@
 			<!-- Header -->
 				<header id="header">
 					<h1 id="logo"><a href="index.html">Landed</a></h1>
-					<nav id="nav">
+					<!-- <nav id="nav">
 						<ul>
 							<li><a href="index.html">Home</a></li>
 							<li>
@@ -43,7 +43,20 @@
 							<li><a href="elements.html">Elements</a></li>
 							<li><a href="#" class="button primary">Sign Up</a></li>
 						</ul>
+					</nav> -->
+					<nav id="nav">
+						<ul>
+							<li><a href="{% url 'index_page' %}">Home</a></li>
+							<li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
+							</li>
+							<li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
+							<li><a href="{% url 'process_image' %}">Process Image</a></li>
+							<li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
+							<li><a href="{% url 'encrypted_image_list' %}">Encrypted Images</a></li>
+							<li><a href="#" class="button primary">Sign Up</a></li>
+						</ul>
 					</nav>
+					
 				</header>
 
 			<!-- Main -->
