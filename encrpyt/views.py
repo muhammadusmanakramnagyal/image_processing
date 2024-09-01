@@ -50,8 +50,7 @@ def process_image(request):
     input_file = request.FILES.get('input_path')
     block_size = 16
     doctor_name = request.POST.get('doctor_name')
-    aes_key = b'This is a key123'  # 16 bytes key
-    custom_aes = CustomAES(aes_key)
+    aes_key = request.POST.get('aes_key')  # 16 bytes key
 
     # Create encrypted folder if it doesn't exist
     encrypted_folder = os.path.join(settings.BASE_DIR, 'encrypted')
@@ -59,14 +58,17 @@ def process_image(request):
 
     # Set the output path
     output_path = os.path.join(encrypted_folder, os.path.splitext(input_file.name)[0] + '_encrypted' + os.path.splitext(input_file.name)[1])
-
+    try:
+        binary_aes_key = aes_key.encode('utf-8')  # Converts the string to binary format (bytes)
+    except Exception as e:
+        return JsonResponse({'error': f"Invalid AES Key: {e}"})
     try:
         image = Image.open(input_file)
     except UnidentifiedImageError:
         return JsonResponse({'error': f"Cannot identify image file '{input_file.name}'."})
     except Exception as e:
         return JsonResponse({'error': f"An error occurred while opening the image: {e}"})
-
+    custom_aes = CustomAES(binary_aes_key)
     try:
         width, height = image.size
         modified_blocks = []

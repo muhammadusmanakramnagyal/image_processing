@@ -63,17 +63,16 @@
             </ul>
         </nav> -->
         <nav id="nav">
-            <ul>
-                <li><a href="{% url 'index_page' %}">Home</a></li>
-                <li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
-                </li>
-                <li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
-                <li><a href="{% url 'process_image' %}">Process Image</a></li>
-                <li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
-                <li><a href="{% url 'encrypted_image_list' %}">Encrypted Images</a></li>
-                <li><a href="#" class="button primary">Sign Up</a></li>
-            </ul>
-        </nav>
+						<ul>
+							<li><a href="{% url 'index_page' %}">Home</a></li>
+							<li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
+							</li>
+							<li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
+							<li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
+							<li><a href="{% url 'encrypted_image_list' %}">Decrypted Images</a></li>
+							<li><a href="#" class="button primary">Sign Up</a></li>
+						</ul>
+					</nav>
         
     </header>
 
@@ -85,27 +84,31 @@
             </header>
             <section id="content">
                 <form id="imageForm" method="post" action="#" enctype="multipart/form-data" onsubmit="submitForm(event)">
-                    {% csrf_token %}
-                    <div class="row gtr-uniform gtr-50">
-                        <div class="col-12">
-                            <!-- Hidden File Input -->
-                            <input type="file" name="input_path" id="input_path" accept="image/*" onchange="handleFileChange(event)" required>
-                    
-                            <!-- Label Styled as Button -->
-                            <label for="input_path" class="button primary">Choose Image File</label>
-                        </div>
-                        <div class="col-12">
-                            <label for="doctor_name">Doctor's Name:</label>
-                            <input type="text" name="doctor_name" id="doctor_name" required placeholder="Doctor's Name">
-                        </div>
-                        <div class="col-12">
-                            <ul class="actions">
-                                <li><button type="submit" class="button primary">Encrypt Image</button></li>
-                                <li><button type="reset" class="button">Reset</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
+    {% csrf_token %}
+    <div class="row gtr-uniform gtr-50">
+        <div class="col-12">
+            <!-- Hidden File Input -->
+            <input type="file" name="input_path" id="input_path" accept="image/*" onchange="handleFileChange(event)" required>
+            <!-- Label Styled as Button -->
+            <label for="input_path" class="button primary">Choose Image File</label>
+        </div>
+        <div class="col-12">
+            <label for="doctor_name">Doctor's Name:</label>
+            <input type="text" name="doctor_name" id="doctor_name" required placeholder="Doctor's Name">
+        </div>
+        <div class="col-12">
+            <label for="aes_key">AES Key:</label>
+            <input type="text" name="aes_key" id="aes_key" required placeholder="16 bytes AES Key">
+        </div>
+        <div class="col-12">
+            <ul class="actions">
+                <li><button type="submit" class="button primary">Encrypt Image</button></li>
+                <li><button type="reset" class="button">Reset</button></li>
+            </ul>
+        </div>
+    </div>
+</form>
+
             </section>
             
             

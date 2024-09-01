@@ -33,6 +33,8 @@ class CustomAES:
 def decrypt_image(request):
     if request.method == 'POST':
         image_id = request.POST.get('image_id')
+        aes_key = request.POST.get('aes_key')
+
         if not image_id:
             return JsonResponse({'error': 'Image ID is required.'})
 
@@ -40,6 +42,10 @@ def decrypt_image(request):
             encrypted_image_record = EncryptedImage.objects.get(id=image_id)
         except EncryptedImage.DoesNotExist:
             return JsonResponse({'error': 'Encrypted image not found.'})
+        try:
+            binary_aes_key = aes_key.encode('utf-8')  # Converts the string to binary format (bytes)
+        except Exception as e:
+            return JsonResponse({'error': f"Invalid AES Key: {e}"})
 
         s_box = encrypted_image_record.s_box
         if isinstance(s_box, str):
@@ -58,8 +64,7 @@ def decrypt_image(request):
         except Exception as e:
             return JsonResponse({'error': f"An error occurred while opening the encrypted image: {e}"})
 
-        aes_key = b'This is a key123'  # Ensure this key matches the encryption key
-        custom_aes = CustomAES(aes_key)
+        custom_aes = CustomAES(binary_aes_key)
         block_size = 16
 
         try:

@@ -17,29 +17,12 @@
 					<h1 id="logo"><a href="{% url 'show_qrng_page' %}">Landed</a></h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="{% url 'show_qrng_page' %}">Home</a></li>
-							<li>
-								<a href="#">Layouts</a>
-								<ul>
-									
-									<li><a href="{% url 'show_qrng_page' %}">Say Hi</a></li>
-									<li><a href="{% url 'show_qrng_page' %}">QRNG Page</a></li>
-									<li><a href="{% url 'show_qrng_page' %}">Generate Quantum Key</a></li>
-								
-									<li>
-										<a href="#">Submenu</a>
-										<ul>
-											<li><a href="#">Option 1</a></li>
-											<li><a href="#">Option 2</a></li>
-											<li><a href="#">Option 3</a></li>
-											<li><a href="#">Option 4</a></li>
-										</ul>
-									</li>
-								</ul>
+							<li><a href="{% url 'index_page' %}">Home</a></li>
+							<li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
 							</li>
-							
-							<li><a href="{% url 'show_qrng_page' %}">Elements</a></li>
-							
+							<li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
+							<li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
+							<li><a href="{% url 'encrypted_image_list' %}">Decrypted Images</a></li>
 							<li><a href="#" class="button primary">Sign Up</a></li>
 						</ul>
 					</nav>
