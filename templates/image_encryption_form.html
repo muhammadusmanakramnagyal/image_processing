@@ -63,6 +63,8 @@
             </ul>
         </nav> -->
         <nav id="nav">
+						<h1 id="logo"><a href="index.html">Landed</a></h1>
+<nav id="nav">
 						<ul>
 							<li><a href="{% url 'index_page' %}">Home</a></li>
 							<li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
@@ -70,7 +72,12 @@
 							<li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
 							<li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
 							<li><a href="{% url 'encrypted_image_list' %}">Decrypted Images</a></li>
-							<li><a href="#" class="button primary">Sign Up</a></li>
+                            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}" class="button primary">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}" class="button primary">Login</a></li>
+            <li><a href="{% url 'signup' %}" class="button primary">Sign Up</a></li>
+        {% endif %}
 						</ul>
 					</nav>
         

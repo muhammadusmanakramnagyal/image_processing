@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <style>
+        .col-12 {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Adjust the gap value as needed */
+        }
+        .col-12 button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <h1 id="logo"><a href="{% url 'index_page' %}">Landed</a></h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'index_page' %}">Home</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main" class="wrapper style1">
+        <div class="container">
+            <header class="major">
+                <h2>Sign Up</h2>
+            </header>
+
+            <form method="POST" class="col-12">
+                {% csrf_token %}
+                {{ signup_form.as_p }}
+                <div class="col-12">
+                    <button type="submit" class="button primary fit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands alt fa-twitter"></a></li>
+            <li><a href="#" class="icon brands alt fa-facebook-f"></a></li>
+            <li><a href="#" class="icon brands alt fa-github"></a></li>
+        </ul>
+    </footer>
+
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>
