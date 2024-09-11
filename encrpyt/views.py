@@ -53,7 +53,7 @@ def process_image(request):
     aes_key = request.POST.get('aes_key')  # 16 bytes key
 
     # Create encrypted folder if it doesn't exist
-    encrypted_folder = os.path.join(settings.BASE_DIR, 'encrypted')
+    encrypted_folder = os.path.join(settings.MEDIA_ROOT, 'encrypted')
     os.makedirs(encrypted_folder, exist_ok=True)
 
     # Set the output path
@@ -62,13 +62,16 @@ def process_image(request):
         binary_aes_key = aes_key.encode('utf-8')  # Converts the string to binary format (bytes)
     except Exception as e:
         return JsonResponse({'error': f"Invalid AES Key: {e}"})
+
     try:
         image = Image.open(input_file)
     except UnidentifiedImageError:
         return JsonResponse({'error': f"Cannot identify image file '{input_file.name}'."})
     except Exception as e:
         return JsonResponse({'error': f"An error occurred while opening the image: {e}"})
+
     custom_aes = CustomAES(binary_aes_key)
+
     try:
         width, height = image.size
         modified_blocks = []
@@ -112,20 +115,26 @@ def process_image(request):
                 block_index = (y // block_size) * (width // block_size) + (x // block_size)
                 new_image.paste(modified_blocks[block_index], (x, y))
 
+        # Save the new image
         new_image.save(output_path)
 
-        # Save S-box and JSON data in the database, along with the encrypted image path
+        # Create a URL for the encrypted image
+        encrypted_image_url = os.path.join(settings.MEDIA_URL, 'encrypted', os.path.basename(output_path))
+
+        # Save data in the database
         encrypted_image_record = EncryptedImage.objects.create(
             doctor_name=doctor_name,
-            s_box=custom_s_box,  # Save S-box as JSON string
-            json_data=json.dumps(json_data),  # Save JSON data as JSON string
-            encrypted_image_path=output_path  # Save the path of the encrypted image
-
+            s_box=custom_s_box,
+            json_data=json.dumps(json_data),
+            encrypted_image_path=output_path,
+            uploaded_image=input_file  # Save the uploaded image as well
         )
 
-        return JsonResponse({'success': True, 'encrypted_image_url': output_path})
+        return JsonResponse({'success': True, 'encrypted_image_url': encrypted_image_url})
+
     except Exception as e:
         return JsonResponse({'error': f"An error occurred during processing: {e}"})
+
 
 
 from django.shortcuts import render

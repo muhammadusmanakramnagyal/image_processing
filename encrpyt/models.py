@@ -1,5 +1,4 @@
 from django.db import models
-
 class EncryptedImage(models.Model):
     doctor_name = models.CharField(max_length=100)
     s_box = models.JSONField()  # To store the S-box

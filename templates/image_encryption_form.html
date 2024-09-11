@@ -28,44 +28,49 @@
         }
 
         async function submitForm(event) {
-            event.preventDefault();
-            const formData = new FormData(document.getElementById('imageForm'));
-            const csrftoken = getCookie('csrftoken');
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('imageForm'));
+    const csrftoken = getCookie('csrftoken');
 
-            const response = await fetch('{% url "process_image" %}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                body: formData
-            });
+    const response = await fetch('{% url "process_image" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        body: formData
+    });
 
-            const result = await response.json();
-            alert(JSON.stringify(result));
-        }
+    const result = await response.json();
+
+    if (result.success) {
+        const encryptedImagePreview = document.getElementById('encryptedImagePreview');
+        encryptedImagePreview.src = result.encrypted_image_url; // Use the URL returned from the server
+        encryptedImagePreview.style.display = 'block'; // Show the image
+    } else {
+        alert(result.error); // Display any errors
+    }
+}
+
     </script>
 </head>
 <body>
     <header id="header">
         <h1 id="logo"><a href="{% url 'image_encryption_form' %}">Landed</a></h1>
-						<h1 id="logo"><a href="index.html">Landed</a></h1>
-<nav id="nav">
-						<ul>
-							<li><a href="{% url 'index_page' %}">Home</a></li>
-							<li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a>
-							</li>
-							<li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
-							<li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
-							<li><a href="{% url 'encrypted_image_list' %}">Decrypted Images</a></li>
-                            {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}" class="button primary">Logout</a></li>
-        {% else %}
-            <li><a href="{% url 'login' %}" class="button primary">Login</a></li>
-            <li><a href="{% url 'signup' %}" class="button primary">Sign Up</a></li>
-        {% endif %}
-						</ul>
-					</nav>
-        
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'index_page' %}">Home</a></li>
+                <li><a href="{% url 'show_sbox_page' %}">Show Sbox Page</a></li>
+                <li><a href="{% url 'image_encryption_form' %}">Image Encryption</a></li>
+                <li><a href="{% url 'show_qrng_page' %}">Quantum Random Number Generation</a></li>
+                <li><a href="{% url 'encrypted_image_list' %}">Decrypted Images</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}" class="button primary">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="button primary">Login</a></li>
+                    <li><a href="{% url 'signup' %}" class="button primary">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </header>
 
     <main id="main" class="wrapper style1">
@@ -76,73 +81,45 @@
             </header>
             <section id="content">
                 <form id="imageForm" method="post" action="#" enctype="multipart/form-data" onsubmit="submitForm(event)">
-    {% csrf_token %}
-    <div class="row gtr-uniform gtr-50">
-        <div class="col-12">
-            <!-- Hidden File Input -->
-            <input type="file" name="input_path" id="input_path" accept="image/*" onchange="handleFileChange(event)" required>
-            <!-- Label Styled as Button -->
-            <label for="input_path" class="button primary">Choose Image File</label>
-        </div>
-        <div class="col-12">
-            <label for="doctor_name">Doctor's Name:</label>
-            <input type="text" name="doctor_name" id="doctor_name" required placeholder="Doctor's Name">
-        </div>
-        <div class="col-12">
-            <label for="aes_key">AES Key:</label>
-            <input type="text" name="aes_key" id="aes_key" required placeholder="16 bytes AES Key">
-        </div>
-        <div class="col-12">
-            <ul class="actions">
-                <li><button type="submit" class="button primary">Encrypt Image</button></li>
-                <li><button type="reset" class="button">Reset</button></li>
-            </ul>
-        </div>
-    </div>
-</form>
-
+                    {% csrf_token %}
+                    <div class="row gtr-uniform gtr-50">
+                        <div class="col-12">
+                            <!-- Hidden File Input -->
+                            <input type="file" name="input_path" id="input_path" accept="image/*" onchange="handleFileChange(event)" required>
+                            <!-- Label Styled as Button -->
+                            <label for="input_path" class="button primary">Choose Image File</label>
+                        </div>
+                        <div class="col-12">
+                            <label for="doctor_name">Doctor's Name:</label>
+                            <input type="text" name="doctor_name" id="doctor_name" required placeholder="Doctor's Name">
+                        </div>
+                        <div class="col-12">
+                            <label for="aes_key">AES Key:</label>
+                            <input type="text" name="aes_key" id="aes_key" required placeholder="16 bytes AES Key">
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li><button type="submit" class="button primary">Encrypt Image</button></li>
+                                <li><button type="reset" class="button">Reset</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+                <!-- Encrypted Image Preview -->
+                <div class="col-12">
+                    <img id="encryptedImagePreview" src="" alt="Encrypted Image" style="display: none; margin-top: 20px; max-width: 100%; border: 1px solid #ccc; border-radius: 10px;" />
+                </div>
             </section>
-            
-            
+
             <section id="cybersecurity-medical-imaging">
                 <header class="major">
                     <h2>Cybersecurity in Medical Imaging</h2>
                     <p>Addressing the cybersecurity flaws in medical imaging systems.</p>
                 </header>
                 <div class="content">
-                    <p>In the digital age, where technology intersects with healthcare, the integrity and confidentiality of medical data are paramount. Medical imaging—encompassing modalities such as MRI, CT scans, X-rays, and ultrasounds—plays a critical role in diagnostics and treatment planning. However, with the increasing reliance on digital systems, ensuring the cybersecurity of medical imaging data has become a significant concern.</p>
-            
-                    <h3>The Growing Importance of Medical Imaging</h3>
-                    <p>Medical imaging provides essential insights into the human body, aiding in the diagnosis, monitoring, and treatment of various medical conditions. The adoption of electronic health records (EHRs) and Picture Archiving and Communication Systems (PACS) has revolutionized the management of imaging data, offering efficiency, accessibility, and enhanced collaboration among healthcare professionals. Despite these advancements, the shift to digital formats also introduces vulnerabilities that can compromise patient safety and privacy.</p>
-            
-                    <h3>Cybersecurity Threats in Medical Imaging</h3>
-                    <ul>
-                        <li><strong>Data Breaches and Unauthorized Access:</strong> Medical imaging data is highly sensitive and valuable. Cybercriminals target healthcare institutions to steal personal health information (PHI), which can be used for identity theft, blackmail, or fraudulent activities. Unauthorized access to imaging data can also lead to exposure of confidential patient information, violating privacy laws and regulations.</li>
-                        <li><strong>Ransomware Attacks:</strong> Ransomware is a type of malicious software that encrypts files, rendering them inaccessible until a ransom is paid. Healthcare organizations are prime targets due to the critical nature of their operations. A ransomware attack on medical imaging systems can disrupt diagnostic services, delay treatments, and compromise patient care.</li>
-                        <li><strong>Malware and Viruses:</strong> Malware can infect medical imaging systems, leading to data corruption, loss, or unauthorized modification. Such threats can interfere with the accuracy of imaging results, potentially leading to incorrect diagnoses or treatment plans.</li>
-                        <li><strong>Insider Threats:</strong> Employees or contractors with access to medical imaging systems may misuse their privileges. Insider threats can include data theft, unauthorized sharing of information, or deliberate sabotage. Ensuring proper access controls and monitoring is crucial to mitigating these risks.</li>
-                        <li><strong>Interception of Data Transmission:</strong> Medical imaging data is often transmitted over networks for review or storage. If not properly encrypted, this data can be intercepted during transmission, leading to unauthorized access or manipulation.</li>
-                    </ul>
-            
-                    <h3>Mitigating Cybersecurity Risks in Medical Imaging</h3>
-                    <ul>
-                        <li><strong>Encryption:</strong> Encrypting medical imaging data both at rest and in transit is essential for protecting it from unauthorized access. Strong encryption algorithms ensure that even if data is intercepted or accessed without permission, it remains unreadable and secure.</li>
-                        <li><strong>Access Controls and Authentication:</strong> Implementing strict access controls ensures that only authorized personnel can access sensitive imaging data. Multi-factor authentication (MFA) adds an extra layer of security, requiring users to provide multiple forms of verification before gaining access.</li>
-                        <li><strong>Regular Security Audits and Vulnerability Assessments:</strong> Conducting regular security audits and vulnerability assessments helps identify potential weaknesses in medical imaging systems. Penetration testing and security assessments can uncover vulnerabilities that need to be addressed to prevent potential exploits.</li>
-                        <li><strong>Incident Response Planning:</strong> Developing a robust incident response plan ensures that healthcare organizations can quickly and effectively respond to cybersecurity incidents. This plan should include procedures for detecting, responding to, and recovering from cyberattacks, as well as communicating with affected parties.</li>
-                        <li><strong>Employee Training and Awareness:</strong> Educating healthcare staff about cybersecurity best practices and potential threats is crucial. Regular training sessions can help employees recognize phishing attempts, adhere to data protection protocols, and understand their role in maintaining cybersecurity.</li>
-                        <li><strong>Updating and Patching Software:</strong> Keeping medical imaging software and systems up to date with the latest security patches and updates is essential for protecting against known vulnerabilities. Regularly updating software helps prevent exploitation by cybercriminals.</li>
-                        <li><strong>Secure Data Storage Solutions:</strong> Implementing secure storage solutions for medical imaging data, including physical and cloud-based storage, ensures that data is protected from unauthorized access or tampering. Proper configuration and access controls for storage systems are vital.</li>
-                        <li><strong>Backup and Recovery:</strong> Regularly backing up medical imaging data and maintaining a robust recovery plan ensures that data can be restored in the event of a cyberattack or system failure. Offsite backups and cloud-based storage solutions provide additional layers of protection.</li>
-                    </ul>
-            
-                    <h3>The Future of Cybersecurity in Medical Imaging</h3>
-                    <p>As technology continues to evolve, so too do the threats and challenges associated with cybersecurity in medical imaging. Emerging technologies such as artificial intelligence (AI) and machine learning (ML) offer new opportunities for enhancing security measures, including anomaly detection, predictive analytics, and automated threat response. However, these advancements also introduce new considerations for data protection.</p>
-            
-                    <p>Healthcare organizations must remain vigilant and proactive in addressing cybersecurity risks. Collaboration between healthcare providers, technology developers, and regulatory bodies will be crucial in developing and implementing effective cybersecurity strategies. By staying informed about emerging threats and best practices, healthcare institutions can better protect their medical imaging systems and ensure the confidentiality, integrity, and availability of critical patient data.</p>
+                    <p>In the digital age, where technology intersects with healthcare, the integrity and confidentiality of medical data are paramount...</p>
                 </div>
             </section>
-            
         </div>
     </main>
 

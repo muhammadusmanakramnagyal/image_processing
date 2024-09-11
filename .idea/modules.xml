@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/secure_roi_encryption.iml" filepath="$PROJECT_DIR$/.idea/secure_roi_encryption.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/imageprocessing.iml" filepath="$PROJECT_DIR$/.idea/imageprocessing.iml" />
     </modules>
   </component>
 </project>
