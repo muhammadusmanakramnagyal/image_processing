@@ -5,9 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23899112-dd8a-4c14-8a06-5b0e99edeca6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/imageprocessing.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database_and_decrption/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/database_and_decrption/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sbox/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sbox/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/2306_encrypted.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/2308_encrypted.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/Capture12_encrypted.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/Capture_encrypted.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/Te-gl_0015_encrypted.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/Te-gl_0016_encrypted.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/decrypted/Ubuntu_encrypted.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/encrypted/2307_encrypted.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/encrypted/2308_encrypted.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2306.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_Bqd62aq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_GUd1Tdh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_QwuWCZC.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_Zw3vOIB.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_kL9vDkd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_mRZvjXS.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2307_s54y2xM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2308.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/uploaded_images/2308_drqk44K.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/db_and_decrypt.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/db_and_decrypt.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +117,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726076512993</updated>
-      <workItem from="1726076514417" duration="6583000" />
+      <workItem from="1726076514417" duration="7426000" />
     </task>
     <servers />
   </component>
